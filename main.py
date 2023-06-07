@@ -22,7 +22,7 @@ def set_bg_hack_url():
          f"""
          <style>
          .stApp {{
-             background: url("https://wallpapercave.com/wp/wp2763924.gif");
+             background: url("https://wallpaperbat.com/img/161069-neural-network-wallpaper.gif");
             
              background-size: cover
          }}
