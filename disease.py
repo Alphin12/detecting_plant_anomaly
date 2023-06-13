@@ -5,32 +5,12 @@ import pandas as pd
 from tensorflow import keras
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
+# from keras.preprocessing import image
 import keras.utils as image
 from PIL import Image
 import streamlit as st
 import io
-
-def set_bg_hacknurtient_url():
-    '''
-    A function to unpack an image from url and set as bg.
-    Returns
-    -------
-    The background.
-    '''
-        
-    st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background: url("https://wallpaperbat.com/img/27368-green-leaf-wallpaper-hd.jpg");
-             background-size: cover
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
-
-def set_bg_hackdisease_url():
+def set_bg_hackd_url():
     '''
     A function to unpack an image from url and set as bg.
     Returns
@@ -43,12 +23,34 @@ def set_bg_hackdisease_url():
          <style>
          .stApp {{
              background: url("https://wallpaperbat.com/img/146005-ultra-hd-macro-wallpaper-top-free-ultra-hd-macro-background.jpg");
+            
              background-size: cover
          }}
          </style>
          """,
          unsafe_allow_html=True
      )
+def set_bg_hackn_url():
+    '''
+    A function to unpack an image from url and set as bg.
+    Returns
+    -------
+    The background.
+    '''
+        
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background: url("https://wallpaperbat.com/img/27368-green-leaf-wallpaper-hd.jpg");
+            
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
 # Function to load uploaded image
 def load_image(image_file):
     img = Image.open(image_file)
@@ -118,10 +120,11 @@ def output(full_pipeline, img):
     a = a.resize((224, 224))
     predic = full_pipeline.predict(a)
     return predic
+
 def main():
     # Sidebar options
     options = ['Plant Disease Detection', 'Nutrient Deficiency Detection']
-    selected_option = st.selectbox('Select an option:', options)
+    selected_option = st.sidebar.selectbox('Select an option:', options)
 
     # Page navigation based on the selected option
     if selected_option == 'Plant Disease Detection':
@@ -137,11 +140,11 @@ def main():
 
 def nutrient():
     # Giving a title
-    set_bg_hacknurtient_url()
+    set_bg_hackn_url()
     col1, col2 = st.columns(2)
 
     with col1:
-        
+        st.title('P.N.D')
         image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
         # Code for prediction
         prediction = ''
@@ -165,14 +168,14 @@ def nutrient():
                     st.image(img, width=int(w))
                 with st.spinner('Predicting...'):
                     prediction = output(full_pipeline, img)
-                st.markdown(f'<div style="background-color:black; color:white; padding:10px">{prediction}</div>', unsafe_allow_html=True)
+                st.success(prediction)
 def disease():
     # Giving a title
-    set_bg_hackdisease_url()
+    set_bg_hackd_url()
     col1, col2 = st.columns(2)
 
     with col1:
-        
+        st.title('P.D.D')
         
         image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
         # Code for prediction
@@ -197,7 +200,7 @@ def disease():
                     st.image(img, width=int(w))
                 with st.spinner('Predicting...'):
                     prediction = output(full_pipeline, img)
-                st.markdown(f'<div style="background-color:black; color:white; padding:10px">{prediction}</div>', unsafe_allow_html=True)
+                st.success(prediction)
 
 
 if __name__ == '__main__':
